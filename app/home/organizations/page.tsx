@@ -3,14 +3,14 @@ import Link from 'next/link';
 import BreadcrumbGenerator from '@/app/common/components/breadcrumb-generator';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import ClientsList from './clients-list';
+import OrganizationList from './organization-list';
 
 const cascadingLinks = [
   { name: 'Home', href: '/home' },
-  { name: 'Clients', href: '/home/clients' },
+  { name: 'Organizations', href: '/home/organizations' },
 ];
 
-export default async function ClientPage() {
+export default async function OrganizationsPage() {
   const supabase = createServerComponentClient({ cookies });
 
   const auth = await supabase.auth.getUser();
@@ -20,20 +20,15 @@ export default async function ClientPage() {
       <div className='flex flex-rows w-100 items-center'>
         <div className='flex flex-1 flex-col'>
           <h1 className='text-xl'>
-                        Clients
+                        Organizations
           </h1>
           <BreadcrumbGenerator cascadingLinks={cascadingLinks}/>
         </div>
-        <div className='flex flex-none items-center p-3'>
-          <Link href={'/home/clients/create'} className='btn bg-green-500 text-green-100 btn-md'>
-            <FiUser/>
-                        Create new
-          </Link>
-        </div>
+       
       </div>
 
       <hr className='border-1 border-gray-100'/>
-      <ClientsList/>
+      <OrganizationList/>
     </main>
   );
 }

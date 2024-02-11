@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { FiUmbrella, FiUser } from 'react-icons/fi';
+import React from 'react';
+import { FiUser } from 'react-icons/fi';
 
 export default function Nav() {
   return (
@@ -21,14 +22,7 @@ export default function Nav() {
 
       <div className='flex-none'>
         <ul className='menu menu-horizontal menu-end p-1 text-dacopsy-blue bg-green-50 text-sm'>
-          <div className="dropdown dropdown-end hover:bg-none">
-            <div tabIndex={0} role="button" className=" text-green-500 rounded-btn hover:bg-none">
-              <FiUser className='text-xl' />
-            </div>
-            <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box text-zinc-400 w-52 mt-4">
-              <li><a>Logout</a></li>
-            </ul>
-          </div>
+          
         </ul>
       </div>
     </div>

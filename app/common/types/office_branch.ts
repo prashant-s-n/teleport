@@ -1,4 +1,4 @@
 export type OfficeBranch = {
-    id: string;
-    branch_name: string;
-}
+  id: string;
+  branch_name: string;
+};

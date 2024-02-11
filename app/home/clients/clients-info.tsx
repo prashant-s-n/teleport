@@ -11,7 +11,7 @@ type PropTypes = {
   userId: string;
 };
 
-export default function UserInfo(props: PropTypes) {
+export default function ClientInfo(props: PropTypes) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState<any>(null);
