@@ -8,13 +8,22 @@ import { AdminRouteMap } from './app/common/constants/route-maps/admin.route-map
 import { headers } from 'next/headers'
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
 
   const requestHeaders = new Headers(req.headers)
   requestHeaders.set('original_url', req.url)
 
+  const res = NextResponse.next(
+    {
+      request: {
+        headers: requestHeaders
+      }
+    }
+  );
+
   // Create a Supabase client configured to use cookies
-  const supabase = createMiddlewareClient<Database>({ req, res });
+  const supabase = createMiddlewareClient<Database>({ req, res});
+
+  
 
   // Refresh session if expired - required for Server Components
   const {
@@ -33,11 +42,7 @@ export async function middleware(req: NextRequest) {
     }
     
     // Authentication successful, forward request to protected route.
-    return NextResponse.next({
-      request: {
-        headers: requestHeaders
-      }
-    });
+    return res;
   }
 
 

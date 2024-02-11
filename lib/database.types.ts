@@ -6,9 +6,95 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
+      clients: {
+        Row: {
+          address: string | null
+          created_at: string
+          created_by: string | null
+          dob: string | null
+          email: string | null
+          first_name: string | null
+          gender: Database["public"]["Enums"]["gender"] | null
+          id: string
+          is_active: boolean | null
+          last_name: string | null
+          middle_name: string | null
+          phone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          created_by?: string | null
+          dob?: string | null
+          email?: string | null
+          first_name?: string | null
+          gender?: Database["public"]["Enums"]["gender"] | null
+          id?: string
+          is_active?: boolean | null
+          last_name?: string | null
+          middle_name?: string | null
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          created_by?: string | null
+          dob?: string | null
+          email?: string | null
+          first_name?: string | null
+          gender?: Database["public"]["Enums"]["gender"] | null
+          id?: string
+          is_active?: boolean | null
+          last_name?: string | null
+          middle_name?: string | null
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          client_id: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean | null
+          message: string | null
+          meta: Json | null
+        }
+        Insert: {
+          client_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean | null
+          message?: string | null
+          meta?: Json | null
+        }
+        Update: {
+          client_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean | null
+          message?: string | null
+          meta?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       office_branches: {
         Row: {
           address: string | null
@@ -29,6 +115,38 @@ export interface Database {
           id?: string
         }
         Relationships: []
+      }
+      organizations: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          name: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organizations_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       roles: {
         Row: {
@@ -66,7 +184,7 @@ export interface Database {
           phone: string | null
           role_id: string | null
           updated_at: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           branch?: string | null
@@ -82,7 +200,7 @@ export interface Database {
           phone?: string | null
           role_id?: string | null
           updated_at?: string | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           branch?: string | null
@@ -98,7 +216,7 @@ export interface Database {
           phone?: string | null
           role_id?: string | null
           updated_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
