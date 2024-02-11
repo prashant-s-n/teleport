@@ -1,0 +1,1 @@
+export * as UrlConfig from './url.config';
