@@ -1,46 +1,43 @@
-"use client";
-import { useSessionContext, useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
-import { Suspense, useEffect, useState } from "react";
-import Login from "../../login/page";
-import { redirect } from "next/navigation";
+'use client';
 
-export default function Auth() { 
-    const supabase = useSupabaseClient();
-    const session = useSessionContext();
-    const user = useUser();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+import { useSessionContext, useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { Suspense, useEffect, useState } from 'react';
+import { redirect } from 'next/navigation';
+import Login from '../../login/page';
 
-    async function handleSignOut() {
-        const {error} = await supabase.auth.signOut();
+export default function Auth() {
+  const supabase = useSupabaseClient();
+  const session = useSessionContext();
+  const user = useUser();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-        if(error) {
-            alert(error);
-        }
+  async function handleSignOut() {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      alert(error);
     }
+  }
 
-    useEffect(() => {
-        setIsLoading(false);
-        
-    },[]);
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
-    if(isLoading) {
-        return (
-            <Suspense>
+  if (isLoading) {
+    return (
+      <Suspense>
                 Loading...
-            </Suspense>
-        );
-    }
+      </Suspense>
+    );
+  }
 
-    if(!session && !user) {
-        return (
-            <Login/>
-        )
-    }
+  if (!session && !user) {
+    return (
+      <Login/>
+    );
+  }
 
-    
-    if(session && user) {
-        redirect('/home');
-    }
-
-    
+  if (session && user) {
+    redirect('/home');
+  }
 }

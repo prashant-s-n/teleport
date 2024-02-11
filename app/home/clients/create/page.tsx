@@ -27,24 +27,18 @@ async function getRoles() {
 
 const cascadingLinks = [
   { name: 'Home', href: '/home' },
-  { name: 'Users', href: '/home/users' },
-  { name: 'Create', href: '/home/users/create' },
+  { name: 'Clients', href: '/home/clients' },
+  { name: 'Create', href: '/home/clients/create' },
 ];
 
-export default function CreateUser() {
-  const [officeBranches, setOfficeBranches] = useState([]);
-  const [roles, setRoles] = useState([]);
-
+export default function CreateClient() {
+  
   const [isFormProcessing, setIsFormProcessing] = useState<boolean>(false);
   const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
   const [adverseAction, setAdverseAction] = useState<boolean | string>(false);
 
   const router = useRouter();
 
-  useEffect(() => {
-    getBranches().then((branches: any) => setOfficeBranches(branches));
-    getRoles().then((roles: any) => setRoles(roles));
-  }, []);
 
   const schema = yup
     .object({
@@ -54,10 +48,8 @@ export default function CreateUser() {
       last_name: yup.string().required(),
       dob: yup.date().required(),
       gender: yup.string().required(),
-      location: yup.string().required(),
-      role: yup.string().required(),
+      address: yup.string().required(),
       phone: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
-      password: yup.string().matches(passwordExp, 'Password is not meeting the standards'),
     })
     .required();
 
@@ -77,7 +69,7 @@ export default function CreateUser() {
   }, 3000, { leading: true, trailing: false, maxWait: 1000 }), []);
 
   const onSubmit = (data: any) => {
-    const url = new URL('apis/auth/api/signup', UrlConfig.API_BASE_URL);
+    const url = new URL('apis/clients', UrlConfig.API_BASE_URL);
 
     axios.post(url.toString(), {
       data,
@@ -86,7 +78,7 @@ export default function CreateUser() {
       setIsUserCreated(true);
 
       setTimeout(() => {
-        router.replace('/home/users');
+        router.replace('/home/clients');
         router.refresh();
       }, 3000);
     }).catch((error) => {
@@ -100,7 +92,7 @@ export default function CreateUser() {
       <main className='gap-4 p-4 rounded-md flex bg-white items-center flex-col h-screen justify-center'>
         <div className='bg-white flex flex-col items-center p-4 rounded-lg gap-6 animate-pulse'>
           <span className='loading loading-infinity loading-lg'></span>
-          <p className='p-6'>A new user is getting <span className='line-through	inline'>created</span> teleported.</p>
+          <p className='p-6'>A new client is getting <span className='line-through	inline'>onboarded</span> teleported.</p>
         </div>
       </main>
     );
@@ -142,7 +134,7 @@ export default function CreateUser() {
     <main className='rounded-md bg-white p-4'>
       <div className='flex w-full flex-col'>
         <div className='flex flex-1 flex-col p-0'>
-          <h1 className='mb-0 text-xl'>Create User</h1>
+          <h1 className='mb-0 text-xl'>Create Client</h1>
           <BreadcrumbGenerator cascadingLinks={cascadingLinks}/>
         </div>
         <div className='flex min-w-full flex-col p-4'>
@@ -168,14 +160,7 @@ export default function CreateUser() {
                   <p className='py-2 text-xs uppercase text-red-400'>
                     {errors.email?.message}
                   </p>
-                </div>
-                <div className='flex py-2 '>
-                  <span className='text-xs text-zinc-700'>
-                    <FiInfo className='mr-1 inline' />
-                    This will also be utilized as your username while logging
-                    into Teleport
-                  </span>
-                </div>
+                </div>  
               </div>
 
               <div className='flex flex-col py-2'>
@@ -269,27 +254,6 @@ export default function CreateUser() {
 
               <div className='flex flex-col py-2'>
                 <div className='flex flex-col'>
-                  <span className='text-sm text-zinc-400'>Password</span>
-                  <p className='py-2 text-xs block text-gray-400'>
-                    Must be a 8 digit password with 1 UPPERCASE, 1 lowercase, numbers and atleast 1
-                    special character.
-                  </p>
-                </div>
-                <div className='flex flex-col'>
-                  <input
-                    {...register('password')}
-                    type='password'
-                    placeholder='YourSecREtPw'
-                    className='input input-bordered w-full max-w-xs'
-                  />
-                  <p className='py-2 text-xs uppercase text-red-400'>
-                    {errors.password?.message}
-                  </p>
-                </div>
-              </div>
-
-              <div className='flex flex-col py-2'>
-                <div className='flex flex-col'>
                   <span className='text-sm text-zinc-400'>Phone no.</span>
                   <p className='py-2 text-xs block text-gray-400'>
                     Add a prefix based on the country
@@ -308,67 +272,29 @@ export default function CreateUser() {
                 </div>
               </div>
 
-              <div className='flex flex-none items-center py-3 text-zinc-700'>
-                <FiCompass className='mr-3 text-sm' />
-                <span className='text-sm'>Official details</span>
-              </div>
+              
 
-              {officeBranches && officeBranches.length ? (
+              
                 <div className='flex flex-col py-2'>
                   <div className='flex'>
                     <span className='text-sm text-zinc-400'>
-                      Office Location/ Branch
+                      Home address
                     </span>
                   </div>
                   <div className='flex flex-col'>
-                    <select
-                      {...register('location')}
-                      className='select select-bordered w-full max-w-xs'
-                    >
-                      {officeBranches.length
-                        && officeBranches?.map((officeBranch: any) => (
-                          <option key={officeBranch.id} value={officeBranch.id}>
-                            {officeBranch.branch_name}
-                          </option>
-                        ))}
-                    </select>
-                    <p className='py-2 text-xs uppercase text-red-400'>
-                      {errors.location?.message}
-                    </p>
-                  </div>
+                  <textarea
+                    {...register('address')}
+                    placeholder='Address'
+                    className='textarea textarea-bordered w-full max-w-xs'
+                  />
+                  <p className='py-2 text-xs uppercase text-red-400'>
+                    {errors.address?.message}
+                  </p>
                 </div>
-              ) : (
-                <div className='p-4'>Loading Locations...</div>
-              )}
+                </div>
+            
 
-              {roles && roles.length ? (
-                <div className='flex flex-col py-2'>
-                  <div className='flex'>
-                    <span className='text-sm text-zinc-400'>
-                      Roles
-                    </span>
-                  </div>
-                  <div className='flex flex-col'>
-                    <select
-                      {...register('role')}
-                      className='select select-bordered w-full max-w-xs'
-                    >
-                      {roles.length
-                        && roles?.map((role: any) => (
-                          <option key={role.id} value={role.id}
-                          >
-                            {role.canonical_name}
-                          </option>
-                        ))}
-                    </select>
-                    <p className='py-2 text-xs uppercase text-red-400'>
-                      {errors.role?.message}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className='p-4'>Loading Locations...</div>
-              )}
+            
 
               <div className='flex flex-col py-2'>
                 <button

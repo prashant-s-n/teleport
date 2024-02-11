@@ -1,12 +1,7 @@
+import AppDashboard from './dashboard/page';
 
-
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import AppDashboard from "./dashboard/page";
-
-
-
-export default async function Home(){
+export default async function Home() {
   return (
     <AppDashboard/>
-  )
+  );
 }

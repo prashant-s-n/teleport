@@ -1,3 +1,3 @@
 export const AdminRouteMap = [
-    '/home/users',   
-]
+  '/home/users',
+];

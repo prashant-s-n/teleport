@@ -1,4 +1,3 @@
-import Nav from '../nav';
 import SideBar from './sidebar';
 import Stage from './stage';
 
@@ -9,7 +8,7 @@ export default function WorkspaceLayout({
 }) {
   return (
     <main className='flex min-h-screen'>
-      
+
       <div className='grid grid-cols-12 min-w-full'>
         <div className='col-span-2'>
           <SideBar/>
