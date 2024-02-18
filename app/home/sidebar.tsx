@@ -25,9 +25,12 @@ export default function SideBar() {
   }
 
   return (
-    <div className='flex flex-col p-4 spacing-1 items-start bg-white min-h-full'>
-
-<Link href={'/home/clients'} className='flex p-3 items-center gap-5 min-w-full hover:bg-zinc-100 hover:cursor-pointer'
+    <>
+    {
+      user && 
+      <div className='flex flex-col p-4 spacing-1 items-start bg-white min-h-full'>
+      {JSON.stringify(user?.user_meta)}
+      <Link href={'/home/clients'} className='flex p-3 items-center gap-5 min-w-full hover:bg-zinc-100 hover:cursor-pointer'
         >
         <div className='flex flex-none'>
           <FiUsers className='text-2xl'/>
@@ -77,5 +80,7 @@ export default function SideBar() {
       </div>
 
     </div>
+    }
+    </>
   );
 }

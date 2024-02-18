@@ -1,4 +1,4 @@
-import { FiUser } from 'react-icons/fi';
+import { FiPlay, FiPlus, FiUser } from 'react-icons/fi';
 import Link from 'next/link';
 import BreadcrumbGenerator from '@/app/common/components/breadcrumb-generator';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -10,7 +10,15 @@ const cascadingLinks = [
   { name: 'Users', href: '/home/users' },
 ];
 
-export default async function UserPage() {
+interface SearchPageProps {
+  searchParams: { page_no: string };
+}
+
+export default async function UserPage(
+  {
+    searchParams: { page_no },
+  }: SearchPageProps
+) {
   const supabase = createServerComponentClient({ cookies });
 
   const auth = await supabase.auth.getUser();
@@ -25,15 +33,14 @@ export default async function UserPage() {
           <BreadcrumbGenerator cascadingLinks={cascadingLinks}/>
         </div>
         <div className='flex flex-none items-center p-3'>
-          <Link href={'/home/users/create'} className='btn bg-green-500 text-green-100 btn-md'>
-            <FiUser/>
-                        Create new
+          <Link href={'/home/users/create'} className='btn bg-green-100 text-green-600 btn-md'>
+            <FiPlus className='text-xl'/>
           </Link>
         </div>
       </div>
 
       <hr className='border-1 border-gray-100'/>
-      <UsersList/>
+      <UsersList page_no={page_no}/>
     </main>
   );
 }

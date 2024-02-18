@@ -1,7 +1,17 @@
+import { useSearchParams } from 'next/navigation';
 import AppDashboard from './dashboard/page';
 
-export default async function Home() {
+interface SearchPageProps {
+  searchParams: { query: string };
+}
+
+export default async function Home({
+  searchParams: { query },
+}: SearchPageProps) {
   return (
-    <AppDashboard/>
+    <>
+      
+      <AppDashboard/>
+    </>
   );
 }

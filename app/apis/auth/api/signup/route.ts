@@ -84,6 +84,7 @@ export async function POST(request: NextRequest) {
 
   await supabase.from(SupabaseSchema.public.users)
     .insert({
+      id: signUpData?.user.id,
       user_id: signUpData?.user.id,
       role_id: role,
       branch: location,
@@ -98,5 +99,9 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({
     message: 'Signup successful',
+    data: {
+      first_name: firstName,
+      last_name: lastName,
+    }
   });
 }

@@ -44,11 +44,11 @@ export default function CreateClient() {
     .object({
       email: yup.string().email().required(),
       first_name: yup.string().required(),
-      middle_name: yup.string().required(),
+      middle_name: yup.string().optional(),
       last_name: yup.string().required(),
       dob: yup.date().required(),
       gender: yup.string().required(),
-      address: yup.string().required(),
+      address: yup.string().optional(),
       phone: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
     })
     .required();
@@ -103,7 +103,7 @@ export default function CreateClient() {
       <main className='gap-4 p-4 rounded-md flex bg-white flex-col h-screen justify-center'>
         <div className=' text-green-600 w-full flex flex-col items-center p-7 rounded-lg gap-2 justify-center'>
           <span className='p-1  '><FcApproval className='text-9xl'/></span>
-          <p className='p-1'>User created</p>
+          <p className='p-1'>Client created</p>
           <p className='p-1'>
             <span className='text-green-700 text-sm'>
               You will be getting redirected in 3s

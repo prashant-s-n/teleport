@@ -38,6 +38,7 @@ export default function CreateUser() {
   const [isFormProcessing, setIsFormProcessing] = useState<boolean>(false);
   const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
   const [adverseAction, setAdverseAction] = useState<boolean | string>(false);
+  const [fullName, setFullName] = useState('');
 
   const router = useRouter();
 
@@ -50,9 +51,9 @@ export default function CreateUser() {
     .object({
       email: yup.string().email().required(),
       first_name: yup.string().required(),
-      middle_name: yup.string().required(),
+      middle_name: yup.string().optional(),
       last_name: yup.string().required(),
-      dob: yup.date().required(),
+      dob: yup.date().nullable().notRequired(),
       gender: yup.string().required(),
       location: yup.string().required(),
       role: yup.string().required(),
@@ -77,7 +78,10 @@ export default function CreateUser() {
   }, 3000, { leading: true, trailing: false, maxWait: 1000 }), []);
 
   const onSubmit = (data: any) => {
+
     const url = new URL('apis/auth/api/signup', UrlConfig.API_BASE_URL);
+
+    setFullName(data?.first_name + ' ' + data?.last_name) 
 
     axios.post(url.toString(), {
       data,
@@ -108,13 +112,13 @@ export default function CreateUser() {
 
   if (isUserCreated) {
     return (
-      <main className='gap-4 p-4 rounded-md flex bg-white flex-col h-screen justify-center'>
-        <div className=' text-green-600 w-full flex flex-col items-center p-7 rounded-lg gap-2 justify-center'>
+      <main className='gap-4 p-4 rounded-md flex bg-white flex-col h-screen justify-center items-center'>
+        <div className=' text-green-600 w-fit flex flex-col items-center p-7 rounded-lg gap-2 justify-center'>
           <span className='p-1  '><FcApproval className='text-9xl'/></span>
-          <p className='p-1'>User created</p>
+          <p className='p-1'>{fullName} has been onboarded</p>
           <p className='p-1'>
             <span className='text-green-700 text-sm'>
-              You will be getting redirected in 3s
+              You will be getting redirected shortly in 3s
             </span>
           </p>
         </div>

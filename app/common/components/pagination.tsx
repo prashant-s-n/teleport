@@ -14,7 +14,7 @@ const Pagination = ({ currentPage, totalPages, basePath } : {
       {pages.map((page) => {
         const isActive = page === currentPage;
         return (
-          <Link href={`${basePath}?page_size=${page}`} key={page}>
+          <Link href={`${basePath}?page_no=${page}`} key={page}>
             <input className={`join-item btn btn-sm rounded-md btn-square`}
               checked={isActive ? true : false}
               readOnly

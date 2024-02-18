@@ -1,4 +1,4 @@
-import { FiUser } from 'react-icons/fi';
+import { FiPlus, FiUser } from 'react-icons/fi';
 import Link from 'next/link';
 import BreadcrumbGenerator from '@/app/common/components/breadcrumb-generator';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -26,8 +26,7 @@ export default async function ClientPage() {
         </div>
         <div className='flex flex-none items-center p-3'>
           <Link href={'/home/clients/create'} className='btn bg-green-500 text-green-100 btn-md'>
-            <FiUser/>
-                        Create new
+            <FiPlus className='text-xl'/>
           </Link>
         </div>
       </div>

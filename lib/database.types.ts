@@ -220,6 +220,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "public_users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "users_branch_fkey"
             columns: ["branch"]
             isOneToOne: false
@@ -231,13 +238,6 @@ export type Database = {
             columns: ["role_id"]
             isOneToOne: false
             referencedRelation: "roles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "users_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
