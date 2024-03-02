@@ -46,7 +46,7 @@ export async function middleware(req: NextRequest) {
   }
 
 
-  if(req.nextUrl.pathname != '/' && !req.nextUrl.pathname.startsWith('/apis') && !req.nextUrl.pathname.endsWith('.png')) {
+  if(req.nextUrl.pathname != '/' && !req.nextUrl.pathname.startsWith('/apis') && !req.nextUrl.pathname.endsWith('.png') && !req.nextUrl.pathname.endsWith('.jpeg')) {
     const redirectUrl = req.nextUrl.clone()
     redirectUrl.pathname = '/'
     return NextResponse.redirect(redirectUrl)

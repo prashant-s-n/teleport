@@ -46,7 +46,7 @@ export default function CreateClient() {
       first_name: yup.string().required(),
       middle_name: yup.string().optional(),
       last_name: yup.string().required(),
-      dob: yup.date().required(),
+      dob: yup.date().optional(),
       gender: yup.string().required(),
       address: yup.string().optional(),
       phone: yup.string().matches(phoneRegExp, 'Phone number is not valid'),

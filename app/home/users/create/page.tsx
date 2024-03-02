@@ -53,7 +53,7 @@ export default function CreateUser() {
       first_name: yup.string().required(),
       middle_name: yup.string().optional(),
       last_name: yup.string().required(),
-      dob: yup.date().nullable().notRequired(),
+      dob: yup.date().nullable().optional(),
       gender: yup.string().required(),
       location: yup.string().required(),
       role: yup.string().required(),
