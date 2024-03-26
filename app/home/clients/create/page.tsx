@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { FiCompass, FiInfo, FiUser } from 'react-icons/fi';
+import { FiCompass, FiInfo, FiUser, FiX } from 'react-icons/fi';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/navigation';
 import BreadcrumbGenerator from '@/app/common/components/breadcrumb-generator';
@@ -31,7 +31,11 @@ const cascadingLinks = [
   { name: 'Create', href: '/home/clients/create' },
 ];
 
-export default function CreateClient() {
+export default function CreateClient(
+  {closeDialogHandler} : {
+    closeDialogHandler : () => void
+  }
+) {
   
   const [isFormProcessing, setIsFormProcessing] = useState<boolean>(false);
   const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
@@ -46,7 +50,6 @@ export default function CreateClient() {
       first_name: yup.string().required(),
       middle_name: yup.string().optional(),
       last_name: yup.string().required(),
-      dob: yup.date().optional(),
       gender: yup.string().required(),
       address: yup.string().optional(),
       phone: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
@@ -56,6 +59,7 @@ export default function CreateClient() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -78,6 +82,11 @@ export default function CreateClient() {
       setIsUserCreated(true);
 
       setTimeout(() => {
+        closeDialogHandler();
+
+        reset();
+        setIsUserCreated(false);
+
         router.replace('/home/clients');
         router.refresh();
       }, 3000);
@@ -131,15 +140,21 @@ export default function CreateClient() {
   }
 
   return (
-    <main className='rounded-md bg-white p-4'>
+    <main className='rounded-md bg-white'>
       <div className='flex w-full flex-col'>
-        <div className='flex flex-1 flex-col p-0'>
-          <h1 className='mb-0 text-xl'>Create Client</h1>
-          <BreadcrumbGenerator cascadingLinks={cascadingLinks}/>
+        <div className='flex flex-1 flex-row p-0 items-center'>
+          <div className='flex flex-1'>
+            <h1 className='mb-0 text-2xl'>Create Client</h1>
+          </div>
+          <div className='flex flex-none'>
+            <button className='btn bg-white border-none' onClick={closeDialogHandler}>
+              <FiX className='text-xl'/>
+            </button>
+          </div>    
         </div>
-        <div className='flex min-w-full flex-col p-4'>
+        <div className='flex min-w-full flex-col'>
           <form onSubmit={handleSubmit(debouncedClick)}>
-            <div className='flex flex-col'>
+            <div className='flex flex-col min-w-full'>
               <div className='flex flex-none items-center py-3 text-zinc-700'>
                 <FiUser className='mr-3 text-sm' />
                 <span className='text-sm'>Personal Details</span>
@@ -147,7 +162,7 @@ export default function CreateClient() {
 
               <div className='flex flex-col py-2'>
                 <div className='flex'>
-                  <span className='text-sm text-zinc-400'>Email address</span>
+                  <span className='text-sm text-zinc-400 py-1'>Email address</span>
                 </div>
                 <div className='flex flex-col'>
                   <input
@@ -165,7 +180,7 @@ export default function CreateClient() {
 
               <div className='flex flex-col py-2'>
                 <div className='flex'>
-                  <span className='text-sm text-zinc-400'>First Name</span>
+                  <span className='text-sm text-zinc-400 py-1'>First Name</span>
                 </div>
                 <div className='flex flex-col'>
                   <input
@@ -182,7 +197,7 @@ export default function CreateClient() {
 
               <div className='flex flex-col py-2'>
                 <div className='flex'>
-                  <span className='text-sm text-zinc-400'>Middle Name</span>
+                  <span className='text-sm text-zinc-400 py-1'>Middle Name</span>
                 </div>
                 <div className='flex flex-col'>
                   <input
@@ -199,7 +214,7 @@ export default function CreateClient() {
 
               <div className='flex flex-col py-2'>
                 <div className='flex'>
-                  <span className='text-sm text-zinc-400'>Last Name</span>
+                  <span className='text-sm text-zinc-400 py-1'>Last Name</span>
                 </div>
                 <div className='flex flex-col'>
                   <input
@@ -216,26 +231,7 @@ export default function CreateClient() {
 
               <div className='flex flex-col py-2'>
                 <div className='flex'>
-                  <span className='text-sm text-zinc-400'>
-                    Date of Birth (Optional)
-                  </span>
-                </div>
-                <div className='flex flex-col'>
-                  <input
-                    {...register('dob')}
-                    type='text'
-                    placeholder='YYYY/MM/DD'
-                    className='input input-bordered w-full max-w-xs'
-                  />
-                  <p className='py-2 text-xs uppercase text-red-400'>
-                    {errors.dob?.message ? 'Please enter a valid date' : ''}
-                  </p>
-                </div>
-              </div>
-
-              <div className='flex flex-col py-2'>
-                <div className='flex'>
-                  <span className='text-sm text-zinc-400'>Gender</span>
+                  <span className='text-sm text-zinc-400 py-1'>Gender</span>
                 </div>
                 <div className='flex flex-col'>
                   <select
@@ -254,7 +250,7 @@ export default function CreateClient() {
 
               <div className='flex flex-col py-2'>
                 <div className='flex flex-col'>
-                  <span className='text-sm text-zinc-400'>Phone no.</span>
+                  <span className='text-sm text-zinc-400 py-2 '>Phone no.</span>
                   <p className='py-2 text-xs block text-gray-400'>
                     Add a prefix based on the country
                   </p>
@@ -277,7 +273,7 @@ export default function CreateClient() {
               
                 <div className='flex flex-col py-2'>
                   <div className='flex'>
-                    <span className='text-sm text-zinc-400'>
+                    <span className='text-sm text-zinc-400 py-2'>
                       Home address
                     </span>
                   </div>

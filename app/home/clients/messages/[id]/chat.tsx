@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { FiArrowRight } from "react-icons/fi";
 import * as yup from 'yup';
 
-export default function ChatPage(props:{id: string, refresh: boolean}) {
+export default function ChatPage(props:{id: string, refresh: boolean, getMessagesTrigger: () => any}) {
     const router = useRouter();
 
     const [refreshChat, setRefreshChat] = useState(false);
@@ -43,9 +43,9 @@ export default function ChatPage(props:{id: string, refresh: boolean}) {
         axios.post(url.toString(), {
           data : {...data, client_id: props.id},
         }).then((response) => {
-            router.replace(`/home/clients/messages/${props.id}`);
-            router.refresh();
-            setRefreshChat(true);
+            
+            //router.refresh();
+            props.getMessagesTrigger();
 
             reset();
         }).catch((error) => {
@@ -55,10 +55,10 @@ export default function ChatPage(props:{id: string, refresh: boolean}) {
     
     return (
         <form onSubmit={handleSubmit(debouncedClick)}>
-        <div className='p-3'>
-            <div className='w-full border rounded-md p-3 shadow-sm'>
+        <div className='p-3  bg-white rounded-md'>
+            <div className='w-full rounded-md p-3'>
                 <div className='flex flex-row justify-end'>
-                    <input {...register('message')} type='text' className='p-2 outline-none w-11/12' placeholder='Type a message' />
+                    <input {...register('message')} type='text' className='p-2 outline-none w-11/12' placeholder='Type a note' />
                     <button type='submit' className='bg-green-100 p-4 rounded-lg text-green-500 right'>
                         <FiArrowRight className='text-xl' />
                     </button>

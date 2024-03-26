@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AuthMessages, ClientMessages } from '@/app/common/constants/messages';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { ResponseProtocol } from '@/app/common/types/response-protocol';
 
 type ClientCreationRequest = {
   email : string;
@@ -74,3 +75,5 @@ export async function POST(request: NextRequest) {
     message: 'Client created successfully',
   });
 }
+
+

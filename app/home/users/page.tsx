@@ -19,6 +19,7 @@ export default async function UserPage(
     searchParams: { page_no },
   }: SearchPageProps
 ) {
+  
   const supabase = createServerComponentClient({ cookies });
 
   const auth = await supabase.auth.getUser();

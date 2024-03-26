@@ -10,7 +10,6 @@ export default async function Home({
 }: SearchPageProps) {
   return (
     <>
-      
       <AppDashboard/>
     </>
   );

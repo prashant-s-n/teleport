@@ -7,7 +7,7 @@ export default function WorkspaceLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className='flex min-h-screen'>
+    <main className='flex'>
 
       <div className='grid grid-cols-12 min-w-full'>
         <div className='col-span-2'>

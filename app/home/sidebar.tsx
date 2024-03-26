@@ -1,6 +1,6 @@
 'use client';
 
-import { FiGlobe, FiLogOut, FiUser, FiUsers } from 'react-icons/fi';
+import { FiGlobe, FiHome, FiLogOut, FiUser, FiUsers } from 'react-icons/fi';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useEffect, useState } from 'react';
@@ -27,9 +27,28 @@ export default function SideBar() {
   return (
     <>
     {
-      user && 
-      <div className='flex flex-col p-4 spacing-1 items-start bg-white min-h-full'>
-      {JSON.stringify(user?.user_meta)}
+      
+      <div className='flex flex-col p-4 spacing-1 bg-white min-h-full'>
+        {!user && 
+          <div className='flex flex-col items-center p-9 h-screen'>
+            <div className='flex items-center'>
+            <span className="loading loading-spinner loading-lg"></span>
+              </div>
+          
+          </div>
+        }
+        {user && 
+        <section>
+          <Link href={'/home/'} className='flex p-3 items-center gap-5 min-w-full hover:bg-zinc-100 hover:cursor-pointer'
+        >
+        <div className='flex flex-none'>
+          <FiHome className='text-2xl'/>
+        </div>
+        <div className='flex flex-1 items-start flex-col'>
+          <span className='text-md'>Home</span>
+          <span className='text-sm text-zinc-400'>Dashboard home</span>
+        </div>
+      </Link>
       <Link href={'/home/clients'} className='flex p-3 items-center gap-5 min-w-full hover:bg-zinc-100 hover:cursor-pointer'
         >
         <div className='flex flex-none'>
@@ -79,6 +98,7 @@ export default function SideBar() {
         </div>
       </div>
 
+      </section>}
     </div>
     }
     </>

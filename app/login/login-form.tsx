@@ -33,11 +33,11 @@ export default function LoginForm() {
         backgroundRepeat: 'no-repeat',
         backgroundSize:'cover'
       }}>
-        <div className='p-10 bg-gradient-to-r from-emerald-600 via-emerald-400  rounded-t-lg text-white'>
+        <div className='p-10 shadow-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 w-3/5 rounded-t-lg text-white'>
           <span className='text-lg block'>
             The Sheikh Zayed Grand Mosque in Abu Dhabi is a masterpiece of Islamic architecture, blending tradition with modernity. With its intricate marble work and stunning interiors, it's both a cultural icon and a place of worship, welcoming visitors from all walks of life. A symbol of inclusivity and serenity, it stands as a must-see attraction in Abu Dhabi.
           </span>
-          <span className='text-md text-white p-4 block w-fit mt-4 rounded-md font-normal'>
+          <span className='text-md text-white block w-fit mt-4 rounded-md font-normal'>
           Photo by <a href="https://unsplash.com/@dhojayev?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Dovi</a> on <a href="https://unsplash.com/photos/white-and-brown-dome-building-under-blue-sky-during-daytime-mrsxNu1molw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
           </span>
         </div>
@@ -51,7 +51,6 @@ export default function LoginForm() {
               <span className='text-xl block py-1 text-zinc-400 leading-2'>Welcome to </span>
               <span className='text-3xl block py-1 leading-2 font-bold'>Teleport </span>
               <span className='text-sm py-3 text-green-500 block'>Version 1.0.3 Abu Dhabi &middot; أبو ظبي.</span>
-
             </div>
 
             <div className='w-full mt-4'>
@@ -67,6 +66,12 @@ export default function LoginForm() {
                 <FiLock className='inline mr-4'/>
                 Sign In
               </button>
+            </div>
+
+            <div className='flex py-5'>
+              <span className='text-sm text-zinc-400'>
+                This website is intended solely for the use of authorized personnel for internal purposes. All content, including text, images, and any other materials, is confidential and proprietary to our organization.
+              </span>
             </div>
           </div>
         </div>
