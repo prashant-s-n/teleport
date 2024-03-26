@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import CreateClient from "./page";
+import CreateClient from "./create-client-form";
 import { FiPlus } from "react-icons/fi";
 import { useState } from "react";
 

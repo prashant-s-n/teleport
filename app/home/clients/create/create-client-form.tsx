@@ -4,26 +4,14 @@ import { UrlConfig } from '@/configs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { FiCompass, FiInfo, FiUser, FiX } from 'react-icons/fi';
+import { FiUser, FiX } from 'react-icons/fi';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/navigation';
-import BreadcrumbGenerator from '@/app/common/components/breadcrumb-generator';
 import { FcApproval, FcHighPriority } from 'react-icons/fc';
 
 const phoneRegExp = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-const passwordExp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-async function getBranches() {
-  const response = await axios.get(`${UrlConfig.API_BASE_URL}/apis/branches`);
-  return response.data.data;
-}
-
-async function getRoles() {
-  const response = await axios.get(`${UrlConfig.API_BASE_URL}/apis/roles`);
-  return response.data.data;
-}
 
 const cascadingLinks = [
   { name: 'Home', href: '/home' },
@@ -31,11 +19,13 @@ const cascadingLinks = [
   { name: 'Create', href: '/home/clients/create' },
 ];
 
-export default function CreateClient(
-  {closeDialogHandler} : {
-    closeDialogHandler : () => void
-  }
-) {
+interface CreateClientProps {
+  closeDialogHandler: any;
+}
+
+export default function CreateClient({
+  closeDialogHandler
+}: CreateClientProps)  {
   
   const [isFormProcessing, setIsFormProcessing] = useState<boolean>(false);
   const [isUserCreated, setIsUserCreated] = useState<boolean>(false);
